@@ -43,12 +43,12 @@ async function getQueueKeys() {
       )
   );
 
-  queues.map((queue) => {
-    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-  });
+  // queues.map((queue) => {
+  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+  // });
 
   const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
     queues,
