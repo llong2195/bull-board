@@ -7,11 +7,13 @@ import { Redis } from "ioredis";
 
 const PORT = 7712;
 
-const redis = new Redis({
+const redisConfig = {
   host: "localhost",
   port: 6379,
   db: 1,
-});
+}; // Your Redis configuration
+
+const redis = new Redis(redisConfig);
 
 async function getQueueKeys() {
   try {
@@ -31,14 +33,23 @@ async function getQueueKeys() {
   serverAdapter.setBasePath("/queues");
   const queueKeys = await getQueueKeys();
   console.log(queueKeys);
+
   const queues = queueKeys.map(
     (i) =>
       new BullAdapter(
         new Queue(i, {
-          redis: { db: 1 },
+          redis: redisConfig,
         })
       )
   );
+
+  queues.map((queue) => {
+    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+    queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
+  });
+
   const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
     queues,
     serverAdapter,
