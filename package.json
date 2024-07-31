@@ -1,0 +1,19 @@
+{
+  "name": "bull-board",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@bull-board/api": "^5.21.1",
+    "@bull-board/express": "^5.21.1",
+    "bull": "^4.16.0",
+    "bullmq": "^5.11.0",
+    "express": "^4.19.2"
+  }
+}
