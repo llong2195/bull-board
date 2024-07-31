@@ -1,11 +1,9 @@
-"use strict";
-
-const express = require("express");
-const Queue = require("bull");
-const { createBullBoard } = require("@bull-board/api");
-const { BullAdapter } = require("@bull-board/api/bullAdapter");
-const { ExpressAdapter } = require("@bull-board/express");
-const { Redis } = require("ioredis");
+import express from "express";
+import Queue from "bull";
+import { createBullBoard } from "@bull-board/api";
+import { BullAdapter } from "@bull-board/api/bullAdapter";
+import { ExpressAdapter } from "@bull-board/express";
+import { Redis } from "ioredis";
 
 const PORT = 7712;
 
