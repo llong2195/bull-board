@@ -2,15 +2,20 @@ import { createBullBoard } from "@bull-board/api";
 import { BullAdapter } from "@bull-board/api/bullAdapter";
 import { ExpressAdapter } from "@bull-board/express";
 import Queue from "bull";
+import dotenv from "dotenv";
 import express from "express";
 import { Redis, RedisOptions } from "ioredis";
 
-const PORT = 7712;
+// Load environment variables
+dotenv.config();
+
+const PORT = process.env.PORT || 7712;
 
 const redisConfig: RedisOptions = {
-  host: "localhost",
-  port: 6379,
-  db: 1,
+  host: process.env.REDIS_HOST || "localhost",
+  port: parseInt(process.env.REDIS_PORT || "6379"),
+  db: parseInt(process.env.REDIS_DB || "1"),
+  password: process.env.REDIS_PASSWORD,
 }; // Your Redis configuration
 
 const redis = new Redis(redisConfig);
