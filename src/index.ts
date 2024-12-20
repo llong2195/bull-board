@@ -1,13 +1,13 @@
-import express from "express";
-import Queue from "bull";
 import { createBullBoard } from "@bull-board/api";
 import { BullAdapter } from "@bull-board/api/bullAdapter";
 import { ExpressAdapter } from "@bull-board/express";
-import { Redis } from "ioredis";
+import Queue from "bull";
+import express from "express";
+import { Redis, RedisOptions } from "ioredis";
 
 const PORT = 7712;
 
-const redisConfig = {
+const redisConfig: RedisOptions = {
   host: "localhost",
   port: 6379,
   db: 1,
