@@ -1,7 +1,9 @@
 import { createBullBoard } from "@bull-board/api";
-import { BullAdapter } from "@bull-board/api/bullAdapter";
+import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
+// import { BullAdapter } from "@bull-board/api/bullAdapter";
 import { ExpressAdapter } from "@bull-board/express";
 import Queue from "bull";
+import { Queue as QueueMQ } from "bullmq";
 import dotenv from "dotenv";
 import express from "express";
 import { Redis, RedisOptions } from "ioredis";
@@ -19,6 +21,11 @@ const redisConfig: RedisOptions = {
 }; // Your Redis configuration
 
 const redis = new Redis(redisConfig);
+
+const createQueueMQ = (name: string) =>
+  new QueueMQ(name, { connection: redisConfig });
+
+const createQueue = (name: string) => new Queue(name, { redis: redisConfig });
 
 async function getQueueKeys() {
   try {
@@ -39,14 +46,8 @@ async function getQueueKeys() {
   const queueKeys = await getQueueKeys();
   console.log(queueKeys);
 
-  const queues = queueKeys.map(
-    (i) =>
-      new BullAdapter(
-        new Queue(i, {
-          redis: redisConfig,
-        })
-      )
-  );
+  const queues = queueKeys.map((i) => new BullMQAdapter(createQueueMQ(i)));
+  // const queues = queueKeys.map((i) => new BullAdapter(createQueue(i)));
 
   // queues.map((queue) => {
   //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
