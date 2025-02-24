@@ -9,17 +9,17 @@ importers:
   .:
     dependencies:
       '@bull-board/api':
-        specifier: ^6.7.7
-        version: 6.7.7(@bull-board/ui@6.7.7)
+        specifier: ^6.7.9
+        version: 6.7.9(@bull-board/ui@6.7.9)
       '@bull-board/express':
-        specifier: ^6.7.7
-        version: 6.7.7
+        specifier: ^6.7.9
+        version: 6.7.9
       bull:
         specifier: ^4.16.5
         version: 4.16.5
       bullmq:
-        specifier: ^5.40.3
-        version: 5.40.3
+        specifier: ^5.41.5
+        version: 5.41.5
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -34,24 +34,24 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
       '@types/node':
-        specifier: ^22.13.1
-        version: 22.13.1
+        specifier: ^22.13.5
+        version: 22.13.5
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
 
 packages:
 
-  '@bull-board/api@6.7.7':
-    resolution: {integrity: sha512-jSBe+aeNs41T/BUJNutKSM17hJigDLoOaAzUZyFwT63/Yt00hiqQo90THXmDi3vGdXtTruGlkrC9OhVxBKo1eQ==}
+  '@bull-board/api@6.7.9':
+    resolution: {integrity: sha512-wgUoaOq7JmY0udhQ+AyMrRdFRpGCtaQJpSgM/QLkAqKRpRpVz5yHFJK9uI6iV+uNvGJkUWE6hNsn3xamzcMy5A==}
     peerDependencies:
-      '@bull-board/ui': 6.7.7
+      '@bull-board/ui': 6.7.9
 
-  '@bull-board/express@6.7.7':
-    resolution: {integrity: sha512-41jeENKW7jo3PQS8z/fv3kJ4dfoljzrSRftA6rPtTvaoMxmBQXqHEdMjUGw+/bTwqmCw7t3g+Of6q0cWou8AsQ==}
+  '@bull-board/express@6.7.9':
+    resolution: {integrity: sha512-l6PmKDZB7GyaEGiPwzRGSTMHcwHr2dLOntBPTELpYJqhO9HuIGFez+T2hkxRo02CQ0hFJHhIXxOXmGN9pO8V5A==}
 
-  '@bull-board/ui@6.7.7':
-    resolution: {integrity: sha512-QU3OkaJVIUt1SpRRV/XxPSTD9tmJcwBWi1oa4ND+qGWQigQ2H1PYfpQCNFOlyW8qCkBwkSDn8pLwlyGbppWqJg==}
+  '@bull-board/ui@6.7.9':
+    resolution: {integrity: sha512-41a6rr04wu5uVCtnozqYaAhxUMlJZ3Mu4UwbEmGEvwrkTplKb3TKc8uvP3x0KgKUcIl7WU34Wr9N3lHciAUosQ==}
 
   '@ioredis/commands@1.2.0':
     resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
@@ -104,8 +104,8 @@ packages:
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
 
-  '@types/node@22.13.1':
-    resolution: {integrity: sha512-jK8uzQlrvXqEU91UxiK5J7pKHyzgnI1Qnl0QDHIgVGuolJhRb9EEl28Cj9b3rGR8B2lhFCtvIm5os8lFnO/1Ew==}
+  '@types/node@22.13.5':
+    resolution: {integrity: sha512-+lTU0PxZXn0Dr1NBtC7Y8cR21AJr87dLLU953CWA6pMxxv/UDc7jYAY90upcrie1nRcD6XNG5HOYEDtgW5TxAg==}
 
   '@types/qs@6.9.18':
     resolution: {integrity: sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==}
@@ -147,8 +147,8 @@ packages:
     resolution: {integrity: sha512-lDsx2BzkKe7gkCYiT5Acj02DpTwDznl/VNN7Psn7M3USPG7Vs/BaClZJJTAG+ufAR9++N1/NiUTdaFBWDIl5TQ==}
     engines: {node: '>=12'}
 
-  bullmq@5.40.3:
-    resolution: {integrity: sha512-ZHGHilK/A8wo5HHlPbwyOWMCEMRsyEmwFubEu98Xb7IyELyJCDn2hXYQVemG8dqFovkgIxXmerf4y3OHcmwmOQ==}
+  bullmq@5.41.5:
+    resolution: {integrity: sha512-WD0HQs6m4/aHJ9low7s737s2anZwFmnI7AhzMpBYua7EpKTTU1QDruHVHRmsqUKR/KdIcxC0fc/DkKI6+9INXg==}
 
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
@@ -311,8 +311,8 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  get-intrinsic@1.2.7:
-    resolution: {integrity: sha512-VW6Pxhsrk0KAOqs3WEd0klDiF/+V7gQOpAvY1jVU/LHmaD/kQO4523aiJuikX/QAKYiW6x8Jh+RJej1almdtCA==}
+  get-intrinsic@1.3.0:
+    resolution: {integrity: sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==}
     engines: {node: '>= 0.4'}
 
   get-port@5.1.1:
@@ -596,23 +596,23 @@ packages:
 
 snapshots:
 
-  '@bull-board/api@6.7.7(@bull-board/ui@6.7.7)':
+  '@bull-board/api@6.7.9(@bull-board/ui@6.7.9)':
     dependencies:
-      '@bull-board/ui': 6.7.7
+      '@bull-board/ui': 6.7.9
       redis-info: 3.1.0
 
-  '@bull-board/express@6.7.7':
+  '@bull-board/express@6.7.9':
     dependencies:
-      '@bull-board/api': 6.7.7(@bull-board/ui@6.7.7)
-      '@bull-board/ui': 6.7.7
+      '@bull-board/api': 6.7.9(@bull-board/ui@6.7.9)
+      '@bull-board/ui': 6.7.9
       ejs: 3.1.10
       express: 5.0.1
     transitivePeerDependencies:
       - supports-color
 
-  '@bull-board/ui@6.7.7':
+  '@bull-board/ui@6.7.9':
     dependencies:
-      '@bull-board/api': 6.7.7(@bull-board/ui@6.7.7)
+      '@bull-board/api': 6.7.9(@bull-board/ui@6.7.9)
 
   '@ioredis/commands@1.2.0': {}
 
@@ -637,15 +637,15 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.13.1
+      '@types/node': 22.13.5
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.13.1
+      '@types/node': 22.13.5
 
   '@types/express-serve-static-core@5.0.6':
     dependencies:
-      '@types/node': 22.13.1
+      '@types/node': 22.13.5
       '@types/qs': 6.9.18
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -661,7 +661,7 @@ snapshots:
 
   '@types/mime@1.3.5': {}
 
-  '@types/node@22.13.1':
+  '@types/node@22.13.5':
     dependencies:
       undici-types: 6.20.0
 
@@ -672,12 +672,12 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 22.13.1
+      '@types/node': 22.13.5
 
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 22.13.1
+      '@types/node': 22.13.5
       '@types/send': 0.17.4
 
   accepts@2.0.0:
@@ -728,7 +728,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  bullmq@5.40.3:
+  bullmq@5.41.5:
     dependencies:
       cron-parser: 4.9.0
       ioredis: 5.5.0
@@ -750,7 +750,7 @@ snapshots:
   call-bound@1.0.3:
     dependencies:
       call-bind-apply-helpers: 1.0.2
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
 
   chalk@4.1.2:
     dependencies:
@@ -893,7 +893,7 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  get-intrinsic@1.2.7:
+  get-intrinsic@1.3.0:
     dependencies:
       call-bind-apply-helpers: 1.0.2
       es-define-property: 1.0.1
@@ -1128,14 +1128,14 @@ snapshots:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.4
 
   side-channel-weakmap@1.0.2:
     dependencies:
       call-bound: 1.0.3
       es-errors: 1.3.0
-      get-intrinsic: 1.2.7
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.4
       side-channel-map: 1.0.1
 
