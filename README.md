@@ -5,7 +5,7 @@ This project sets up an Express server with Bull and Bull Board for managing and
 ## Prerequisites
 
 - Node.js
-- npm (Node Package Manager)
+- pnpm
 - Redis server
 
 ## Installation
@@ -20,7 +20,7 @@ This project sets up an Express server with Bull and Bull Board for managing and
    ```
 3. Install the dependencies:
    ```sh
-   npm install
+   pnpm install
    ```
 
 ## Usage
@@ -31,7 +31,7 @@ This project sets up an Express server with Bull and Bull Board for managing and
    ```
 2. Run the application:
    ```sh
-   npm start
+   pnpm start
    ```
 3. The server will be running on `http://localhost:7712`.
 
