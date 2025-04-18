@@ -12,6 +12,7 @@ import { Redis, RedisOptions } from "ioredis";
 dotenv.config();
 
 const PORT = process.env.PORT || 7712;
+const readOnlyMode = process.env.READ_ONLY_MODE == "true";
 
 const redisConfig: RedisOptions = {
   host: process.env.REDIS_HOST || "localhost",
@@ -30,7 +31,7 @@ const createQueue = (name: string) => new Queue(name, { redis: redisConfig });
 async function getQueueKeys() {
   try {
     const keys = await redis.keys("bull:*");
-    return Array.from(new Set(keys.map((i) => i.split(":")[1])));
+    return Array.from(new Set(keys.map((i) => i.split(":")[1]))).sort();
   } catch (err) {
     console.error("Error fetching keys:", err);
     throw err;
@@ -44,9 +45,11 @@ async function getQueueKeys() {
   const serverAdapter = new ExpressAdapter();
   serverAdapter.setBasePath("/queues");
   const queueKeys = await getQueueKeys();
-  console.log(queueKeys);
+  console.log("🚀 ~ queueKeys:", queueKeys);
 
-  const queues = queueKeys.map((i) => new BullMQAdapter(createQueueMQ(i)));
+  const queues = queueKeys.map(
+    (i) => new BullMQAdapter(createQueueMQ(i), { readOnlyMode: readOnlyMode })
+  );
   // const queues = queueKeys.map((i) => new BullAdapter(createQueue(i)));
 
   // queues.map((queue) => {
