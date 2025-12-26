@@ -1,8 +1,6 @@
 import { createBullBoard } from "@bull-board/api";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
-// import { BullAdapter } from "@bull-board/api/bullAdapter";
 import { ExpressAdapter } from "@bull-board/express";
-import Queue from "bull";
 import { Queue as QueueMQ } from "bullmq";
 import dotenv from "dotenv";
 import express from "express";
@@ -12,63 +10,107 @@ import { Redis, RedisOptions } from "ioredis";
 dotenv.config();
 
 const PORT = process.env.PORT || 7712;
-const readOnlyMode = process.env.READ_ONLY_MODE == "true";
 
-const redisConfig: RedisOptions = {
-  host: process.env.REDIS_HOST || "localhost",
-  port: parseInt(process.env.REDIS_PORT || "6379"),
-  db: parseInt(process.env.REDIS_DB || "1"),
-  password: process.env.REDIS_PASSWORD,
-}; // Your Redis configuration
+interface BoardConfig {
+  router: string;
+  redisConfig: RedisOptions;
+  readOnlyMode?: boolean;
+}
 
-const redis = new Redis(redisConfig);
+// Parse board configurations from environment
+function loadBoardConfigs(): BoardConfig[] {
+  const configs: BoardConfig[] = [];
+  let idx = 1;
 
-const createQueueMQ = (name: string) =>
-  new QueueMQ(name, { connection: redisConfig });
+  // Read individual BOARD_ROUTER_N variables
+  while (process.env[`BOARD_ROUTER_${idx}`]) {
+    const router = process.env[`BOARD_ROUTER_${idx}`];
+    configs.push({
+      router: router!,
+      redisConfig: {
+        host: process.env[`REDIS_HOST_${idx}`] || "localhost",
+        port: parseInt(process.env[`REDIS_PORT_${idx}`] || "6379"),
+        db: parseInt(process.env[`REDIS_DB_${idx}`] || String(idx)),
+        password: process.env[`REDIS_PASSWORD_${idx}`],
+      },
+      readOnlyMode: process.env[`READ_ONLY_MODE_${idx}`] === "true",
+    });
+    idx++;
+  }
 
-const createQueue = (name: string) => new Queue(name, { redis: redisConfig });
+  // Default configs if none provided
+  if (configs.length === 0) {
+    configs.push(
+      {
+        router: "/board1",
+        redisConfig: { host: "localhost", port: 6379, db: 1 },
+        readOnlyMode: false,
+      },
+      {
+        router: "/board2",
+        redisConfig: { host: "localhost", port: 6379, db: 2 },
+        readOnlyMode: false,
+      },
+    );
+  }
 
-async function getQueueKeys() {
+  return configs;
+}
+
+const boardConfigs = loadBoardConfigs();
+
+async function getQueueKeys(redisConfig: RedisOptions): Promise<string[]> {
+  const redis = new Redis(redisConfig);
   try {
     const keys = await redis.keys("bull:*");
-    return Array.from(new Set(keys.map((i) => i.split(":")[1]))).sort();
+    return [...new Set(keys.map((key) => key.split(":")[1]))].sort();
   } catch (err) {
-    console.error("Error fetching keys:", err);
-    throw err;
+    console.error("Error fetching queue keys:", err);
+    return [];
   } finally {
-    redis.disconnect();
+    await redis.quit();
   }
 }
 
 (async () => {
-  const app = express();
-  const serverAdapter = new ExpressAdapter();
-  serverAdapter.setBasePath("/queues");
-  const queueKeys = await getQueueKeys();
-  console.log("🚀 ~ queueKeys:", queueKeys);
+  try {
+    const app = express();
 
-  const queues = queueKeys.map(
-    (i) => new BullMQAdapter(createQueueMQ(i), { readOnlyMode: readOnlyMode })
-  );
-  // const queues = queueKeys.map((i) => new BullAdapter(createQueue(i)));
+    console.log(`Loading ${boardConfigs.length} board configuration(s)...`);
 
-  // queues.map((queue) => {
-  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-  //   queue.addJob("__TESTING__", { foo: "bar" }, { delay: 10000 });
-  // });
+    // Setup each Bull Board instance
+    for (const config of boardConfigs) {
+      const serverAdapter = new ExpressAdapter();
+      serverAdapter.setBasePath(config.router);
 
-  const { addQueue, removeQueue, setQueues, replaceQueues } = createBullBoard({
-    queues,
-    serverAdapter,
-  });
+      const queueKeys = await getQueueKeys(config.redisConfig);
+      console.log(
+        `[${config.router}] Found ${queueKeys.length} queue(s):`,
+        queueKeys,
+      );
 
-  app.use("/queues", serverAdapter.getRouter());
+      const queues = queueKeys.map(
+        (name) =>
+          new BullMQAdapter(
+            new QueueMQ(name, { connection: config.redisConfig }),
+            { readOnlyMode: config.readOnlyMode },
+          ),
+      );
 
-  app.listen(PORT, () => {
-    console.log(`Running on ${PORT}...`);
-    console.log(`For the UI, open http://localhost:${PORT}/queues`);
-    console.log("Make sure Redis is running on port 6379 by default");
-  });
+      createBullBoard({ queues, serverAdapter });
+      app.use(config.router, serverAdapter.getRouter());
+    }
+
+    app.listen(PORT, () => {
+      console.log(`\n🚀 Server running on port ${PORT}`);
+      console.log(`📊 Bull Board UIs:`);
+      boardConfigs.forEach((cfg) => {
+        const mode = cfg.readOnlyMode ? "[READ-ONLY]" : "";
+        console.log(`   • http://localhost:${PORT}${cfg.router} ${mode}`);
+      });
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
 })();
