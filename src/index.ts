@@ -101,6 +101,10 @@ async function getQueueKeys(redisConfig: RedisOptions): Promise<string[]> {
       app.use(config.router, serverAdapter.getRouter());
     }
 
+    app.use("/healthz",(_req, res) => {
+      res.status(200).send("OK");
+    });
+
     app.listen(PORT, () => {
       console.log(`\n🚀 Server running on port ${PORT}`);
       console.log(`📊 Bull Board UIs:`);
